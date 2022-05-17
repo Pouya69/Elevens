@@ -6,7 +6,7 @@ package com.company.card;
  * <code>Card</code> represents a playing card.
  */
 public class Card {
-
+	String myBranchString = "";
 	/**
 	 * String value that holds the suit of the card
 	 */
