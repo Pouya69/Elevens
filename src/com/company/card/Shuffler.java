@@ -1,5 +1,11 @@
 package com.company.card;
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Random;
+
 /**
  * This class provides a convenient way to test shuffling methods.
  */
@@ -10,7 +16,6 @@ public class Shuffler {
 	 * to each sorting procedure.
 	 */
 	private static final int SHUFFLE_COUNT = 1;
-
 
 	/**
 	 * Tests shuffling methods.
@@ -75,7 +80,26 @@ public class Shuffler {
 	 * searching for an as-yet-unselected card.
 	 * @param values is an array of integers simulating cards to be shuffled.
 	 */
-	public static void selectionShuffle(int[] values) {
-		/* *** TO BE IMPLEMENTED IN ACTIVITY 3 *** */
+	public static void selectionShuffle(int[] values) 
+	{
+		List<Integer> valuesArrayList =  new ArrayList<>();
+		for (int v : values)
+		{
+			valuesArrayList.add(v);
+		}
+
+		Random random = new Random();
+		int deckLength = values.length;
+		int[] shuffled = new int[deckLength];
+		
+		for(int i = 0; i < values.length; i++)
+		{
+			int bruh = random.nextInt(deckLength + 1);
+			shuffled[i] = valuesArrayList.get(bruh);
+			valuesArrayList.remove(bruh);
+
+			deckLength--;
+		}
+
 	}
 }
