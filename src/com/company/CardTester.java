@@ -1,5 +1,7 @@
 package com.company;
 
+import java.util.Random;
+
 /**
  * This is a class that tests the Card class.
  */

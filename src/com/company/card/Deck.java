@@ -2,6 +2,7 @@ package com.company.card;
 
 import java.util.List;
 import java.util.ArrayList;
+import java.util.Random;
 
 /**
  * The Deck class represents a shuffled deck of cards.
@@ -42,6 +43,7 @@ public class Deck {
 				indexCard++;
 			}
 		}
+		this.shuffle();
 	}
 
 
@@ -66,7 +68,21 @@ public class Deck {
 	 * and reset the size to represent the entire deck.
 	 */
 	public void shuffle() {
-		/* *** TO BE IMPLEMENTED IN ACTIVITY 4 *** */
+		List<Card> valuesArrayList = new ArrayList<>(this.cards);
+
+		Random random = new Random();
+		int deckLength = this.cards.size();
+		Card[] shuffled = new Card[deckLength];
+
+		for(int i = 0; i < this.cards.size(); i++)
+		{
+			int bruh = random.nextInt(deckLength + 1);
+			shuffled[i] = valuesArrayList.get(bruh);
+			valuesArrayList.remove(bruh);
+
+			deckLength--;
+		}
+		this.cards = List.of(shuffled);
 	}
 
 	/**
@@ -86,32 +102,32 @@ public class Deck {
 	 */
 	@Override
 	public String toString() {
-		String rtn = "size = " + size + "\nUndealt cards: \n";
+		StringBuilder rtn = new StringBuilder("size = " + size + "\nUndealt cards: \n");
 
 		for (int k = size - 1; k >= 0; k--) {
-			rtn = rtn + cards.get(k);
+			rtn.append(cards.get(k));
 			if (k != 0) {
-				rtn = rtn + ", ";
+				rtn.append(", ");
 			}
 			if ((size - k) % 2 == 0) {
 				// Insert carriage returns so entire deck is visible on console.
-				rtn = rtn + "\n";
+				rtn.append("\n");
 			}
 		}
 
-		rtn = rtn + "\nDealt cards: \n";
+		rtn.append("\nDealt cards: \n");
 		for (int k = cards.size() - 1; k >= size; k--) {
-			rtn = rtn + cards.get(k);
+			rtn.append(cards.get(k));
 			if (k != size) {
-				rtn = rtn + ", ";
+				rtn.append(", ");
 			}
 			if ((k - cards.size()) % 2 == 0) {
 				// Insert carriage returns so entire deck is visible on console.
-				rtn = rtn + "\n";
+				rtn.append("\n");
 			}
 		}
 
-		rtn = rtn + "\n";
-		return rtn;
+		rtn.append("\n");
+		return rtn.toString();
 	}
 }
