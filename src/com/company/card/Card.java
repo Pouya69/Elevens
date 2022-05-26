@@ -63,6 +63,10 @@ public class Card {
 		return this.pointValue;
 	}
 
+	public boolean matchesTheValue(int value) {
+		return this.pointValue == value;
+	}
+
 	/** Compare this card with the argument.
 	 * @param otherCard the other card to compare to this
 	 * @return true if the rank, suit, and point value of this card

@@ -100,6 +100,7 @@ public class Deck {
 	 * Generates and returns a string representation of this deck.
 	 * @return a string representation of this deck.
 	 */
+
 	@Override
 	public String toString() {
 		StringBuilder rtn = new StringBuilder("size = " + size + "\nUndealt cards: \n");
@@ -129,5 +130,32 @@ public class Deck {
 
 		rtn.append("\n");
 		return rtn.toString();
+	}
+
+	public boolean containsPlayableValues() {
+		boolean contains = false;
+		boolean isJPresent = false;
+		boolean isQPresent = false;
+		boolean isKPresent = false;
+		for (int i = 0; i < this.cards.size(); i++) {
+			int cardValue = this.cards.get(i).pointValue();
+			if (cardValue == 13)
+				isJPresent = true;
+			else if (cardValue == 14)
+				isQPresent = true;
+			else if (cardValue == 15)
+				isKPresent = true;
+			for (int j = 0; j < i; j++) {
+				if (this.cards.get(j).pointValue() + cardValue == 11 || (isJPresent && isQPresent && isKPresent)) {
+					contains = true;
+					break;
+				}
+			}
+			if (contains)
+				break;
+		}
+		if (!contains)
+			return isJPresent && isQPresent && isKPresent;
+		return true;
 	}
 }
