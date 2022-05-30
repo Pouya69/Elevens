@@ -39,11 +39,12 @@ public class Deck {
 		int indexCard = 0;
 		for (String suit : suits) {
 			for (int i = 0; i < ranks.length; i++) {
-				this.cards.add(new Card(ranks[indexCard], suit, values[indexCard]));
+				this.cards.add(new Card(ranks[i], suit, values[i]));
 				indexCard++;
 			}
 		}
 		this.shuffle();
+		this.size = this.cards.size();
 	}
 
 
@@ -76,7 +77,7 @@ public class Deck {
 
 		for(int i = 0; i < this.cards.size(); i++)
 		{
-			int bruh = random.nextInt(deckLength + 1);
+			int bruh = random.nextInt(deckLength);
 			shuffled[i] = valuesArrayList.get(bruh);
 			valuesArrayList.remove(bruh);
 
@@ -91,7 +92,9 @@ public class Deck {
 	 *         previously dealt.
 	 */
 	public Card deal() {
-		Card card = this.cards.get(this.size);
+		if (this.size == 0)
+			return null;
+		Card card = this.cards.get(this.size-1);
 		this.size--;
 		return card;
 	}
@@ -132,21 +135,23 @@ public class Deck {
 		return rtn.toString();
 	}
 
-	public boolean containsPlayableValues() {
+	public boolean containsPlayableValues(List<Card> table) {
 		boolean contains = false;
 		boolean isJPresent = false;
 		boolean isQPresent = false;
 		boolean isKPresent = false;
-		for (int i = 0; i < this.cards.size(); i++) {
-			int cardValue = this.cards.get(i).pointValue();
+		for (int i = 0; i < table.size(); i++) {
+			int cardValue = table.get(i).pointValue();
 			if (cardValue == 13)
 				isJPresent = true;
 			else if (cardValue == 14)
 				isQPresent = true;
 			else if (cardValue == 15)
 				isKPresent = true;
-			for (int j = 0; j < i; j++) {
-				if (this.cards.get(j).pointValue() + cardValue == 11 || (isJPresent && isQPresent && isKPresent)) {
+			for (int j = 0; j < table.size(); j++) {
+				if (j == i)
+					continue;
+				if (table.get(j).pointValue() + cardValue == 11 || (isJPresent && isQPresent && isKPresent)) {
 					contains = true;
 					break;
 				}
@@ -154,8 +159,6 @@ public class Deck {
 			if (contains)
 				break;
 		}
-		if (!contains)
-			return isJPresent && isQPresent && isKPresent;
-		return true;
+		return contains;
 	}
 }
